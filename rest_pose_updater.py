@@ -362,18 +362,23 @@ class VIEW3D_PT_auto_rest_pose_panel(bpy.types.Panel):
         layout.label(text="This tool does Apply Pose as Rest Pose,", icon='AUTO')
         layout.label(text="while preserving anim Actions and mesh weights.", icon='AUTO')
         layout.separator()
-
-        # New Rest Bake Mode Controls
-        layout.label(text="Bones to Apply Pose as Rest Pose:")
-        layout.prop(scene, "sync_apply_global_rest", text="Apply for all bones")
-        layout.separator()
         layout.label(text="For symmetrical bones,", icon='INFO')
         layout.label(text="if both bones of a symmetrical bone pair have non-symmetrical transforms,")
         layout.label(text="it will choose the bone that has larger transform from the original Rest Pose")
         layout.label(text="to apply symmetrical transform.")
         layout.separator()
-        
+
+        # New Rest Bake Mode Controls
+        layout.separator()
+        layout.label(text="Bones to Apply Pose as Rest Pose:")
+        layout.prop(scene, "sync_apply_global_rest", text="Apply for all bones")
+        layout.separator()
+        layout.label(text="LEAVE THIS UNCHECKED! (Hover mouse on checkbox for info)", icon='ERROR')
+        layout.label(text="For all bones: Select all bones('A' key) before clicking the Apply button", icon='ERROR')
+        layout.separator()
+
         # Displays the persistent property toggle natively as a checkbox element
+        layout.separator()
         layout.label(text="Linked mesh handling options:")
         layout.prop(scene, "sync_handle_linked_meshes", text="Bypass Cross-Scene Linked Meshes")
         layout.prop(scene, "sync_handle_duplicate_linked", text="Bypass \"Duplicate Linked (Alt + D)\" Meshes ")
@@ -387,8 +392,11 @@ class VIEW3D_PT_auto_rest_pose_panel(bpy.types.Panel):
 def register():
     bpy.types.Scene.sync_apply_global_rest = bpy.props.BoolProperty(
         name="Apply For All Bones", # "Global Rest Pose Bake"
-        description="True: Apply pose as Rest pose for all bones in Armature.\n\nFalse: Apply pose as Rest pose for selected bones only.",
-        default=True
+        description="True: Apply pose as Rest pose for all bones in Armature.\n\nFalse: Apply pose as Rest pose for selected bones only.\n\nThere's an issue where arms IK become \"unbendable stiff\" when checked.\nThis issue had previously been found and fixed but seems like it returned during iterations of the script.\nSetting to False and selecting all bones before running script doesn't seem to have this issue.",
+
+        # changed default value to False bc arms IK became "unbendable stiff" on True, this issue had previously been found and fixed but seems like it returned during iterations of the script
+        # though, setting to False and selecting all bones before running script doesn't seem to have this issue
+        default=False
     )
 
     bpy.types.Scene.sync_handle_linked_meshes = bpy.props.BoolProperty(
