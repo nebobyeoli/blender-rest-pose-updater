@@ -5,7 +5,7 @@
 Auto-detects modified pose bones, mirrors them for symmetric bones, then does Apply Pose to Rest Pose, preserving mesh weights, mesh mirror seams, and animation Actions.<br>
 
 Mostly written with google ai search mode, for personal use on Blender 4.5 LTS.<br>
-This may or may not work on any Blender 4.0+ versions
+This may or may not work on any other Blender 4.0+ versions
 
 Maybe it's just my skill issue, but many such cases where I make a model, rig it, and rapidly iterate making animations, but then I realize the default pose is bad. Or needs to be changed. Or some bones (like item bones) need to be oriented in a specific way.<br>
 If you just *Apply Pose to Rest Pose*, the mesh and existing animation Actions all distort badly and you need to go through each bone and mesh duplicating modifiers and adding copy transform constraints... when I just want to modify the default pose just a tweak. I felt like this shouldn't be such a hassle or prone to user error to do
